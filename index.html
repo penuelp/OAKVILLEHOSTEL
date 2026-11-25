@@ -1,162 +1,71 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pay Rent - Parkwood & Oakville</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OAKVILLE & PARKWOOD - Pay Rent</title>
 <style>
-body{font-family:Arial;padding:12px;background:#f6f6f6;margin:0}
-h1{text-align:center;font-size:22px}
-.card{background:#fff;padding:14px;border-radius:12px;margin:10px 0}
-input,textarea,button{width:100%;padding:13px;margin:6px 0;border-radius:10px;border:1px solid #ccc;font-size:15px;box-sizing:border-box}
-button{font-weight:bold;cursor:pointer}
-.hostel-btn{padding:18px;font-size:18px;margin:8px 0;border:2px solid #111;background:#fff;border-radius:14px}
-.hostel-btn.active{background:#25D366;color:#fff;border-color:#25D366}
-.hidden{display:none}
-label{font-weight:bold;font-size:14px}
-.payinfo{background:#e6ffe6;padding:12px;border-radius:10px}
-.auto{background:#fff3cd;padding:12px;border-radius:10px}
-.error{background:#ffe6e6;color:#c00;padding:12px;border-radius:10px;font-weight:bold}
-.ok{background:#e6ffe6;color:#006600;padding:12px;border-radius:10px;font-weight:bold}
-</style>
-</head>
-<body>
-<h1>🏠 Pay Rent</h1>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#111}
+.top{background:#111827;color:#fff;padding:14px;text-align:center}.top b{font-size:20px}.top small{color:#fbbf24}
+.card{background:#fff;margin:12px;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+h2{margin:6px 0 12px}.label{font-size:13px;color:#666;margin:10px 0 4px}
+.hostels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hbtn{padding:20px 10px;border:3px solid #e5e7eb;border-radius:16px;background:#fff;cursor:pointer;text-align:center}
+.hbtn.active{border-color:#111827;background:#111827;color:#fff}
+.hbtn b{font-size:18px;display:block}.hbtn span{font-size:12px;opacity:.8}
+.paybox{background:#fef3c7;border:2px dashed #f59e0b;border-radius:12px;padding:12px;text-align:center;margin-top:12px}
+.paybox b{font-size:18px}.paybox code{font-size:18px;background:#fff;padding:2px 8px;border-radius:6px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font-size:16px}
+.btn{width:100%;padding:15px;border:0;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;margin-top:10px}
+.green{background:#16a34a;color:#fff}.dark{background:#111827;color:#fff}.orange{background:#f97316;color:#fff}
+.tabs{display:flex;gap:8px}.tab{flex:1;padding:12px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer;font-weight:700}.tab.active{background:#111827;color:#fff}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid #eee;padding:8px;text-align:left}
+.badge{padding:3px 8px;border-radius:20px;font-size:11px;background:#dcfce7}
+.hidden{display:none}.row{display:flex;gap:8px}.row>*{flex:1}
+</style></head><body>
+<div class="top"><b>OAKVILLE & PARKWOOD</b><br><small>HOSTELS • KIMANA • PAY RENT</small><div id="topHostel" style="margin-top:6px;font-size:13px">Paybill 516600 | Acc 589001 | Parkwood</div></div>
 
-<div class="card" id="step1">
-<h3>Choose Your Hostel</h3>
-<button type="button" class="hostel-btn" id="btnParkwood">🏠 PARKWOOD</button>
-<button type="button" class="hostel-btn" id="btnOakville">🏠 OAKVILLE</button>
-<p id="testMsg" style="font-size:12px;color:#888">If buttons don't work, reload page.</p>
-</div>
-
-<div id="step2" class="hidden">
-<div class="card"><div class="payinfo" id="payInfo"></div></div>
 <div class="card">
-<button type="button" id="backBtn" style="background:#eee">⬅️ Change Hostel</button>
-<h3>Tenant / Pay - <span id="hostelLabel"></span></h3>
-<label>Room No</label><input id="room" placeholder="Room No e.g 001">
-<label>Name</label><input id="name" placeholder="Name">
-<label>ID No</label><input id="idno" placeholder="ID No">
-<label>Phone No</label><input id="phone" placeholder="Phone No e.g 0712345678">
-<label>Paste bank payment confirmation message</label>
-<textarea id="msg" rows="4" placeholder="Paste bank message here"></textarea>
-<div id="status"></div>
-<div class="auto" id="picked" style="display:none"><b>✅ Picked from message:</b><br>Amount: <b id="pAmount">-</b><br>Code / Ref: <b id="pCode">-</b><br>Date: <b id="pDate">-</b></div>
-<button type="button" id="sendBtn" style="background:#25D366;color:#fff;font-size:17px">📲 SEND TO ADMIN VIA WHATSAPP</button>
-<p id="done"></p>
+<h2>Pay Rent</h2>
+<div class="label">Choose Your Hostel</div>
+<div class="hostels">
+<button class="hbtn active" id="btnPark" onclick="setHostel('PARKWOOD')">🏢<b>PARKWOOD</b><span>Tap to select</span></button>
+<button class="hbtn" id="btnOak" onclick="setHostel('OAKVILLE')">🏠<b>OAKVILLE</b><span>Tap to select</span></button>
 </div>
-<div class="card"><b>📱 Enquiry: 0768683797 — Penuel Peter</b></div>
+<div class="paybox"><div id="payTitle">PARKWOOD - PAY VIA M-PESA</div><div style="margin:8px 0"><b>Paybill:</b> <code id="paybill">516600</code> &nbsp; <b>Acc:</b> <code id="acc">589001</code></div><small>1. Go to M-PESA > Lipa na M-PESA > Paybill<br>2. Enter Paybill + Account above<br>3. Enter Amount + PIN • Then fill form below</small></div>
+<div class="label">Full Name</div><input id="name" placeholder="e.g. John Kamau">
+<div class="label">Phone</div><input id="phone" placeholder="07XX XXX XXX">
+<div class="row"><div><div class="label">Room</div><input id="room" placeholder="e.g. A1"></div><div><div class="label">Amount (KSh)</div><input id="amount" type="number" placeholder="5000"></div></div>
+<div class="label">M-PESA Code (e.g. QK123...)</div><input id="code" placeholder="Paste M-PESA code">
+<button class="btn green" onclick="submitPay()">✅ I HAVE PAID - SUBMIT</button>
+<button class="btn orange" onclick="smsPay()">📩 Send SMS to Caretaker</button>
+<div id="msg" style="margin-top:10px;font-weight:700"></div>
+</div>
+
+<div class="card">
+<div class="tabs"><button class="tab active" onclick="showTab('admin',this)">👨‍💼 Admin</button><button class="tab" onclick="showTab('rooms',this)">🛏️ Rooms</button><button class="tab" onclick="showTab('backup',this)">💾 Backup</button></div>
+<div id="tab-admin" style="margin-top:12px">
+<div class="label">Admin PIN</div><input id="pin" type="password" placeholder="Enter PIN - default 1234">
+<button class="btn dark" onclick="unlock()">Unlock Admin</button>
+<div id="adminArea" class="hidden">
+<div style="margin:10px 0"><b>Total Collected:</b> <span id="total">KSh 0</span> | <b>Payments:</b> <span id="count">0</span></div>
+<input id="search" placeholder="Search name / room / hostel..." oninput="render()">
+<div style="overflow:auto"><table><thead><tr><th>Date</th><th>Name</th><th>Hostel</th><th>Room</th><th>Amount</th><th>Code</th></tr></thead><tbody id="list"></tbody></table></div>
+<button class="btn dark" onclick="exportCSV()">⬇️ Download Report (CSV)</button>
+</div></div>
+<div id="tab-rooms" class="hidden" style="margin-top:12px"><p>Rooms: A1-A20 Parkwood, B1-B20 Oakville. Mark paid in Admin list. Vacant rooms show when no payment this month.</p><div id="roomList"></div></div>
+<div id="tab-backup" class="hidden" style="margin-top:12px"><button class="btn dark" onclick="backup()">💾 Copy Backup Text</button><button class="btn dark" onclick="clearAll()">🗑️ Clear All Data</button><p id="backupMsg"></p></div>
 </div>
 
 <script>
-var SHEET_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-var hostel='', paybill='', account='';
-var pickedAmount='', pickedCode='', pickedDate='', isValid=false, rejectReason='';
-
-function getUsedCodes(){ try{ return JSON.parse(localStorage.getItem('usedCodes')||'[]'); }catch(e){ return []; } }
-function saveLocal(code, info){ var l=getUsedCodes(); l.push({code:code,hostel:info.hostel,room:info.room,name:info.name,amount:info.amount,date:info.date,time:new Date().toLocaleString()}); localStorage.setItem('usedCodes',JSON.stringify(l)); }
-function isLocalUsed(code){ return getUsedCodes().find(function(x){return x.code===code;}); }
-
-function chooseHostel(h){
-  hostel=h;
-  document.getElementById('btnParkwood').classList.remove('active');
-  document.getElementById('btnOakville').classList.remove('active');
-  document.getElementById('btn'+h).classList.add('active');
-  document.getElementById('step1').style.display='none';
-  document.getElementById('step2').classList.remove('hidden');
-  document.getElementById('hostelLabel').innerText=h;
-  if(h=='Oakville'){ paybill='247247'; account='0766374370'; } else { paybill='516600'; account='589001'; }
-  document.getElementById('payInfo').innerHTML='<b>'+h.toUpperCase()+' - PAY FIRST:</b><br>Paybill: <b>'+paybill+'</b> | Account: <b>'+account+'</b>';
-  document.getElementById('msg').value='';
-  document.getElementById('picked').style.display='none';
-  document.getElementById('status').innerHTML='';
-}
-function back(){
-  document.getElementById('step2').classList.add('hidden');
-  document.getElementById('step1').style.display='block';
-}
-
-async function isGlobalUsed(code){
-  if(!SHEET_URL || SHEET_URL.indexOf('PASTE_YOUR')!==-1) return false;
-  try{ var r = await fetch(SHEET_URL+'?code='+encodeURIComponent(code)); var j = await r.json(); return j.used===true; }catch(e){ return false; }
-}
-async function saveGlobal(info){
-  if(!SHEET_URL || SHEET_URL.indexOf('PASTE_YOUR')!==-1) return;
-  try{ await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(info)}); }catch(e){}
-}
-
-async function pickDetails(){
-  var msg=document.getElementById('msg').value.trim();
-  pickedAmount=''; pickedCode=''; pickedDate=''; isValid=false; rejectReason='';
-  if(!msg){ document.getElementById('picked').style.display='none'; document.getElementById('status').innerHTML=''; return; }
-  if(!/paid|payment|received|successfully/i.test(msg)){ rejectReason='❌ REJECTED: This is not a payment confirmation message.'; }
-  var mAmt = msg.match(/KES\.?\s*([\d,]+\.\d{2})/i);
-  if(mAmt) pickedAmount='KES. '+mAmt[1]; else if(!rejectReason) rejectReason='❌ REJECTED: Amount (KES) not found in message.';
-  var mCode = msg.match(/Ref\.?:?\s*([A-Z0-9]{6,})/i);
-  if(mCode) pickedCode=mCode[1].toUpperCase(); else if(!rejectReason) rejectReason='❌ REJECTED: Code / Ref not found in message.';
-  var mDate = msg.match(/on\s+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}(?:\s+at\s+[0-9:\.]+\s*(?:AM|PM)?)?)/i);
-  if(mDate) pickedDate=mDate[1]; else if(!rejectReason) rejectReason='❌ REJECTED: Date not found in message.';
-  if(!rejectReason && hostel=='Parkwood'){
-    if(msg.indexOf('589001')===-1) rejectReason='❌ REJECTED: This message is NOT for PARKWOOD. Parkwood Account must be 589001.';
-    if(msg.indexOf('0766374370')!==-1) rejectReason='❌ REJECTED: This is OAKVILLE message (0766374370), not PARKWOOD.';
-  }
-  if(!rejectReason && hostel=='Oakville'){
-    if(msg.indexOf('0766374370')===-1) rejectReason='❌ REJECTED: This message is NOT for OAKVILLE. Oakville Till must be 0766374370.';
-    if(msg.indexOf('589001')!==-1) rejectReason='❌ REJECTED: This is PARKWOOD message (589001), not OAKVILLE.';
-  }
-  if(!rejectReason && pickedCode){
-    var dupLocal = isLocalUsed(pickedCode);
-    if(dupLocal){ rejectReason='❌ REJECTED: DUPLICATE CODE! Code '+pickedCode+' was already used on this phone for '+dupLocal.hostel+' Room '+dupLocal.room; }
-    else {
-      document.getElementById('status').innerHTML='<div class="ok">⏳ Checking Code '+pickedCode+' in all phones...</div>';
-      var dupGlobal = await isGlobalUsed(pickedCode);
-      if(dupGlobal) rejectReason='❌ REJECTED: DUPLICATE CODE! Code '+pickedCode+' was already used by another tenant / another phone.';
-    }
-  }
-  var mName = msg.match(/Dear\s+([A-Z ]+?),/i);
-  if(mName && !document.getElementById('name').value) document.getElementById('name').value=mName[1].trim();
-  if(rejectReason){
-    document.getElementById('picked').style.display='none';
-    document.getElementById('status').innerHTML='<div class="error">'+rejectReason+'</div>';
-    isValid=false;
-  } else {
-    isValid=true;
-    document.getElementById('picked').style.display='block';
-    document.getElementById('pAmount').innerText=pickedAmount;
-    document.getElementById('pCode').innerText=pickedCode;
-    document.getElementById('pDate').innerText=pickedDate;
-    document.getElementById('status').innerHTML='<div class="ok">✅ Valid '+hostel+' Payment - Code Not Used Before - Ready to Send</div>';
-  }
-}
-
-async function send(){
-  var room=document.getElementById('room').value.trim();
-  var name=document.getElementById('name').value.trim();
-  var idno=document.getElementById('idno').value.trim();
-  var phone=document.getElementById('phone').value.trim();
-  var msg=document.getElementById('msg').value.trim();
-  if(!hostel) return alert('Choose Hostel first');
-  if(!room||!name||!idno||!phone||!msg) return alert('Fill all fields');
-  if(room=='042'||room=='42') return alert('042 is OFFICE!');
-  await pickDetails();
-  if(!isValid){ alert(rejectReason || '❌ Wrong message. App rejected it.'); return; }
-  if(isLocalUsed(pickedCode) || await isGlobalUsed(pickedCode)){ alert('❌ DUPLICATE CODE! Already used.'); return; }
-  var info={code:pickedCode,hostel:hostel,room:room,name:name,amount:pickedAmount,date:pickedDate};
-  saveLocal(pickedCode, info);
-  await saveGlobal(info);
-  var text='🏠 '+hostel.toUpperCase()+' - TENANT PAYMENT\n\nHostel: '+hostel+'\nRoom No: '+room+'\nName: '+name+'\nID No: '+idno+'\nPhone No: '+phone+'\nPaybill: '+paybill+'\nAccount: '+account+'\n\nAmount: '+pickedAmount+'\nCode / Ref: '+pickedCode+'\nDate: '+pickedDate+'\n\nBank Payment Confirmation Message:\n'+msg+'\n\nPlease Approve my payment. Thank you!';
-  window.open('https://wa.me/254768683797?text='+encodeURIComponent(text),'_blank');
-  document.getElementById('done').innerHTML='<b style="color:green">✅ Sent. Code '+pickedCode+' saved - cannot be used again on any phone.</b>';
-}
-
-// BUTTONS - FIXED, WORKS EVEN IF onclick FAILS
-document.getElementById('btnParkwood').addEventListener('click', function(){ chooseHostel('Parkwood'); });
-document.getElementById('btnOakville').addEventListener('click', function(){ chooseHostel('Oakville'); });
-document.getElementById('backBtn').addEventListener('click', back);
-document.getElementById('sendBtn').addEventListener('click', send);
-document.getElementById('msg').addEventListener('input', pickDetails);
-document.getElementById('testMsg').innerText = '✅ Buttons loaded - tap PARKWOOD or OAKVILLE';
-</script>
-</body>
-</html>
+let hostel='PARKWOOD';
+let data=JSON.parse(localStorage.getItem('oak_payments')||'[]');
+const H={PARKWOOD:{paybill:'516600',acc:'589001'},OAKVILLE:{paybill:'247247',acc:'0766374370'}};
+function setHostel(h){hostel=h;document.getElementById('btnPark').classList.toggle('active',h=='PARKWOOD');document.getElementById('btnOak').classList.toggle('active',h=='OAKVILLE');document.getElementById('paybill').textContent=H[h].paybill;document.getElementById('acc').textContent=H[h].acc;document.getElementById('payTitle').textContent=h+' - PAY VIA M-PESA';document.getElementById('topHostel').textContent='Paybill '+H[h].paybill+' | Acc '+H[h].acc+' | '+h;render();}
+function submitPay(){let n=name.value.trim(),p=phone.value.trim(),r=room.value.trim(),a=amount.value,c=code.value.trim();if(!n||!p||!r||!a){msg.textContent='⚠️ Fill Name, Phone, Room, Amount';msg.style.color='red';return;}data.unshift({date:new Date().toLocaleDateString(),name:n,phone:p,room:r,amount:Number(a),code:c||'-',hostel});localStorage.setItem('oak_payments',JSON.stringify(data));msg.textContent='✅ Saved! '+n+' - '+hostel+' Room '+r+' KSh '+a;msg.style.color='green';name.value=phone.value=room.value=amount.value=code.value='';render();}
+function smsPay(){let t='Hi, I have paid rent. Hostel:'+hostel+' Name:'+name.value+' Room:'+room.value+' Amount:'+amount.value+' Code:'+code.value;window.open('sms:?body='+encodeURIComponent(t));}
+function showTab(id,el){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');['admin','rooms','backup'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('hidden',x!==id));}
+function unlock(){if(pin.value=='1234'){adminArea.classList.remove('hidden');render();}else alert('Wrong PIN - try 1234');}
+function render(){let s=(search?search.value.toLowerCase():'');let f=data.filter(d=>(d.name+d.room+d.hostel).toLowerCase().includes(s));list.innerHTML=f.map(d=>`<tr><td>${d.date}</td><td>${d.name}</td><td>${d.hostel}</td><td>${d.room}</td><td>${d.amount}</td><td>${d.code}</td></tr>`).join('')||'<tr><td colspan=6>No payments yet</td></tr>';total.textContent='KSh '+data.reduce((a,b)=>a+b.amount,0).toLocaleString();count.textContent=data.length;roomList.innerHTML='Parkwood Paid Rooms: '+(data.filter(d=>d.hostel=='PARKWOOD').map(d=>d.room).join(', ')||'None')+'<br>Oakville Paid Rooms: '+(data.filter(d=>d.hostel=='OAKVILLE').map(d=>d.room).join(', ')||'None');}
+function exportCSV(){let csv='Date,Name,Hostel,Room,Amount,Code\n'+data.map(d=>[d.date,d.name,d.hostel,d.room,d.amount,d.code].join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv]));a.download='rent-report.csv';a.click();}
+function backup(){navigator.clipboard.writeText(JSON.stringify(data));backupMsg.textContent='✅ Backup copied! Paste in WhatsApp / Notes to save.';}
+function clearAll(){if(confirm('Clear all?')){data=[];localStorage.removeItem('oak_payments');render();}}
+render();
+</script></body></html>
